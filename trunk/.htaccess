@@ -1,0 +1,19 @@
+#
+# File: $Id$
+#
+# This .htaccess file sets PHP options that cannot be set at runtime and
+# optionally enables the Apache Rewrite Engine to allow short URLs.
+#
+# @package OpenMonday
+# @subpackage Core
+# @copyright Copyright 2005 OpenMonday Development Group
+# @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+# @link http://openmonday.martlev.com
+#
+
+# PHP options
+php_flag register_globals off
+php_flag magic_quotes_gpc off
+
+# Apache mod_rewrite
+# - Not implemented yet
