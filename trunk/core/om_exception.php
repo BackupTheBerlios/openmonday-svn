@@ -13,7 +13,7 @@
  *
  */
 
- /**
+/**
  * Make sure this file is included by a valid entry point
  */
 if (!defined('OPENMONDAY'))
