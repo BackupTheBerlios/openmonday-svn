@@ -13,21 +13,24 @@
  *
  */
 
-//
-// Make sure this file is included by a valid entry point
-//
+/**
+ * Make sure this file is included by a valid entry point
+ */
 if (!defined('OPENMONDAY'))
 {
 	exit;
 }
 
-//
-// Define configuration array
-//
+/**
+ * Define configuration array
+ */
 $om_config = array();
 
-$om_config['dir'] = '';
+$om_config['dir'] = './';
 $om_config['dir_core'] = $om_config['dir'] . 'core/';
 $om_config['dir_modules'] = $om_config['dir'] . 'modules/';
+
+$om_config['file_core_initiator'] = $om_config['dir_core'] . 'om_initiator.php';
+$om_config['file_core_exception'] = $om_config['dir_core'] . 'om_exception.php';
 
 ?>
