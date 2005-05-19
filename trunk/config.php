@@ -26,11 +26,21 @@ if (!defined('OPENMONDAY'))
  */
 $om_config = array();
 
-$om_config['dir'] = './';
-$om_config['dir_core'] = $om_config['dir'] . 'core/';
-$om_config['dir_modules'] = $om_config['dir'] . 'modules/';
+$om_config['path'] = './';
 
-$om_config['file_core_initiator'] = $om_config['dir_core'] . 'om_initiator.php';
-$om_config['file_core_exception'] = $om_config['dir_core'] . 'om_exception.php';
+$om_config['dir_core'] = $om_config['path'] . 'core/';
+$om_config['dir_modules'] = $om_config['path'] . 'modules/';
+
+$om_config['file_extension'] = '.php';
+
+$om_config['file_core_initiator'] = $om_config['dir_core'] . 'om_initiator' . $om_config['file_extension'];
+$om_config['file_core_exception'] = $om_config['dir_core'] . 'om_exception' . $om_config['file_extension'];
+$om_config['file_core_controller'] = $om_config['dir_core'] . 'om_controller' . $om_config['file_extension'];
+
+$om_config['url_module'] = 'module';
+$om_config['url_action'] = 'action';
+
+$om_config['default_module'] = 'news';
+$om_config['default_action'] = 'display';
 
 ?>

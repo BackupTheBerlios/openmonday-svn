@@ -38,11 +38,18 @@ class om_initiator
 	protected $om_config;
 
 	/**
-	 * Holds the om_exception class
+	 * Holds the exception handler
 	 * @access protected
 	 * @var object
 	 */
 	protected $om_exception;
+
+	/**
+	 * Holds the controller
+	 * @access protected
+	 * @var object
+	 */
+	protected $om_controller;
 
 	/**
 	 * __construct
@@ -55,6 +62,7 @@ class om_initiator
 	{
 		$this->om_config = array();
 		$this->om_exception = (object) NULL;
+		$this->om_controller = (object) NULL;
 	}
 	
 	/**
@@ -102,7 +110,59 @@ class om_initiator
 		{
 			throw new Exception('The PHP configuration option "register_globals" needs to be set to "off".', EXCEPTION_BAD_ENV);
 		}
-	}	
+
+		/**
+		 * See if the GET and POST variables tell us which module to load.
+		 */
+		$module = '';
+		if (!empty($_POST[$this->om_config['url_module']]) || !empty($_GET[$this->om_config['url_module']]))
+		{
+			$module = (!empty($_POST[$this->om_config['url_module']])) ? $_POST[$this->om_config['url_module']] : $_GET[$this->om_config['url_module']];
+			$module = preg_replace('/[^0-9a-z_]/i', '', $module);
+		}
+
+		/**
+		 * See if the GET and POST variables tell us which action the module
+		 * controller needs to load.
+		 */
+		$action = '';
+		if (!empty($_POST[$this->om_config['url_action']]) || !empty($_GET[$this->om_config['url_action']]))
+		{
+			$action = (!empty($_POST[$this->om_config['url_action']])) ? $_POST[$this->om_config['url_action']] : $_GET[$this->om_config['url_action']];
+			$action = preg_replace('/[^0-9a-z_]/i', '', $action);
+		}
+
+		/**
+		 * See if the module's controller definition exists
+		 */
+		$controller_file = $this->om_config['dir_modules'] . $module . '/' . 'controller' . $this->om_config['file_extension'];
+		if ($module == '' || $module == $this->om_config['default_module'] || !is_file($controller_file))
+		{
+			/**
+			 * Module controller not found. Let's try to find the default module.
+			 */
+			$controller_file = $this->om_config['dir_modules'] . $this->om_config['default_module'] . '/' . 'controller' . $this->om_config['file_extension'];
+			if (!is_file($controller_file))
+			{
+				/**
+				 * Default module doesn't exist either. We can't continue.
+				 */
+				throw new Exception('The "default_module" set in the configuration file does not exist.', EXCEPTION_BAD_CONFIG);
+			}
+		}
+
+		/**
+		 * Module exists. Let's load it's controller definition.
+		 */
+		require_once $om_config['file_core_base_controller'];
+		require_once $filename;
+
+		/**
+		 * Start up the controller
+		 */
+		$this->om_controller = new om_controller;
+		$this->om_controller->do($action);
+	}
 }
 
 ?>
