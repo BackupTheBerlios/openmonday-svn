@@ -51,12 +51,14 @@ class om_exception
 	  * exception to the user, if we output it at all.
 	  *
 	  * @access public
-	  * @param string $message A message describing the exception
+	  * @param object $data The exception object containing the data
 	  * @param int $type A number representing an exception type
 	  */
-	  public function handler($message, $type = 0)
+	  public function handler($data)
 	  {
-	  	echo 'Uncought exception ' . $type . ': ' . $message;
+	  	echo '<pre>Uncought exception: ';
+		var_dump($data);
+		echo '</pre>';
 	  }
 }
 

@@ -71,7 +71,7 @@ class om_initiator
 		 * Make sure we have full error reporting and disable magic quotes runtime
 		 */
 		ini_set('error_reporting', E_ALL);
-		ini_set('magic_quote_runtime', FALSE);
+		ini_set('magic_quotes_runtime', FALSE);
 
 		/**
 		 * Create our reference to the configuration array
@@ -86,16 +86,18 @@ class om_initiator
 		set_exception_handler(array(&$this->om_exception, 'handler'));
 		
 		/**
-		 * magic_quotes_gpc should not be enabled
+		 * Check for bad environmental settings
 		 */
 		if (ini_get('magic_quotes_gpc'))
 		{
 			throw new Exception('The PHP configuration option "magic_quotes_gpc" needs to be set to "off".', EXCEPTION_BAD_ENV);
 		}
+		
+		if (ini_get('magic_quotes_sybase'))
+		{
+			throw new Exception('The PHP configuration option "magic_quotes_sybase" needs to be set to "off".', EXCEPTION_BAD_ENV);
+		}
 
-		/**
-		 * register_globals should not be enabled
-		 */
 		if (ini_get('register_globals'))
 		{
 			throw new Exception('The PHP configuration option "register_globals" needs to be set to "off".', EXCEPTION_BAD_ENV);

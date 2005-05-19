@@ -12,8 +12,9 @@
 #
 
 # PHP options
-php_flag register_globals off
 php_flag magic_quotes_gpc off
+php_flag magic_quotes_sybase off
+php_flag register_globals off
 
 # Apache mod_rewrite
 # - Not implemented yet
