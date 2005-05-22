@@ -31,34 +31,50 @@ if (!defined('OPENMONDAY'))
 	exit;
 }
 
-//
-// Define configuration array
-//
-$om_config = array();
+/**
+ * Handles exceptions
+ *
+ * This will try to output the exceptions called in a proper way
+ */
+final class om_exceptions
+{
+	/**
+	 * The constructor
+	 *
+	 * Sets the exception handler, and defines exception type constants.
+	 *
+	 * @access public
+	 */
+	public function __construct()
+	{
+		//
+		// Let's define the different types of exceptions
+		//
+		define('OM_EXCEPTION_CONFIG', 1);
+		define('OM_EXCEPTION_MODULE', 2);
+		define('OM_EXCEPTION_EVENT', 3);
 
-$om_config['path'] = './';
+		//
+		// Let's set the exception handler to ours
+		//
+		set_exception_handler(array(&$this, 'handler'));
+	}
 
-$om_config['dir_core'] = 'core/';
-$om_config['dir_modules'] = 'modules/';
-
-$om_config['file_extension'] = '.php';
-
-$om_config['file_core_exceptions'] = 'om_exceptions';
-$om_config['file_core_modules'] = 'om_modules';
-$om_config['file_core_events'] = 'om_events';
-$om_config['file_core_base_controller'] = 'om_base_controller';
-$om_config['file_core_base_controller'] = 'om_base_model';
-$om_config['file_core_base_controller'] = 'om_base_view';
-
-$om_config['file_module_metadata'] = 'metadata';
-$om_config['file_module_config'] = 'config';
-$om_config['file_module_controller'] = 'controller';
-
-$om_config['default_module'] = 'test';
-$om_config['default_method'] = 'default';
-$om_config['default_arguments'] = array();
-
-$om_config['url_arg_module'] = 'module';
-$om_config['url_arg_method'] = 'method';
+	/**
+	 * The actual handler
+	 *
+	 * This takes the exception object and outputs an error containing the data
+	 * of the exception in proper format.
+	 *
+	 * @access public
+	 * @param object $exception The exception object
+	 */
+	public function handler(&$exception)
+	{
+		print('<pre>');
+		var_dump($exception);
+		print('</pre>');
+	}
+}
 
 ?>
