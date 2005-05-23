@@ -114,7 +114,7 @@ final class om_modules
 		//
 		// Let's create the object.
 		//
-		$this->modules[$module]['controller'] = new om_controller;
+		eval('$this->modules[$module][\'controller\'] = new om_' . $module . '_controller;');
 	}
 
 	/**
