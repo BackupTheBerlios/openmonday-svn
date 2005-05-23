@@ -47,8 +47,8 @@ $om_config['file_core_exceptions'] = 'om_exceptions';
 $om_config['file_core_modules'] = 'om_modules';
 $om_config['file_core_events'] = 'om_events';
 $om_config['file_core_base_controller'] = 'om_base_controller';
-$om_config['file_core_base_controller'] = 'om_base_model';
-$om_config['file_core_base_controller'] = 'om_base_view';
+$om_config['file_core_base_model'] = 'om_base_model';
+$om_config['file_core_base_view'] = 'om_base_view';
 
 $om_config['file_module_metadata'] = 'metadata';
 $om_config['file_module_config'] = 'config';
