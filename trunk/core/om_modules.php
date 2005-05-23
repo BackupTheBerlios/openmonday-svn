@@ -84,12 +84,14 @@ final class om_modules
 		}
 
 		//
-		// If the module metadata file exists, we'll assume that the module exists
+		// If the module metadata and controller file exist, we'll assume that the
+		// module as a whole exists.
 		//
 		$module_file_metadata = $this->om_config['path'] . $this->om_config['dir_modules'] . $module . '/' . $this->om_config['file_module_metadata'] . $this->om_config['file_extension'];
-		if (!is_file($module_file_metadata))
+		$module_file_controller = $this->om_config['path'] . $this->om_config['dir_modules'] . $module . '/' . $this->om_config['file_module_controller'] . $this->om_config['file_extension'];
+		if (!is_file($module_file_metadata) || !is_file($module_file_controller))
 		{
-			throw new Exception('The metadata file of the module "' . $module . '" does not exist.', OM_EXCEPTION_MODULE);
+			throw new Exception('The metadata or controller file of the module "' . $module . '" does not exist.', OM_EXCEPTION_MODULE);
 		}
 
 		//
@@ -109,7 +111,7 @@ final class om_modules
 		// Let's load the actual module controller class
 		//
 		require_once($this->om_config['path'] . $this->om_config['dir_core'] . $this->om_config['file_core_base_controller'] . $this->om_config['file_extension']);
-		require_once($this->om_config['path'] . $this->om_config['dir_modules'] . $module . '/' . $this->om_config['file_module_controller'] . $this->om_config['file_extension']);
+		require_once($module_file_controller);
 
 		//
 		// Let's create the object.
